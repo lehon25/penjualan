@@ -6,6 +6,14 @@ import Typography from '@material-ui/core/Typography';
 import TextField from '@material-ui/core/TextField';
 import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
+import InputAdornment from '@material-ui/core/InputAdornment';
+import IconButton from '@material-ui/core/IconButton';
+import Visibility from '@material-ui/icons/Visibility';
+import VisibilityOff from '@material-ui/icons/VisibilityOff';
+import FormControl from '@material-ui/core/FormControl';
+import Input from '@material-ui/core/Input';
+import InputLabel from '@material-ui/core/InputLabel';
+
 
 // import styles
 import useStyles from './styles';
@@ -27,27 +35,42 @@ function Login(props){
     const classes = useStyles()
     const [form,setForm]= useState({
         email:'',
-        password:''
+        password:'',
+        showPassword:false
+
     });
 
     const [error,setError] = useState({
         email:'',
         password:''
     })
+    
 
     const [isSubmitting,setSubmitting] = useState(false);
 
     const {auth,user,loading} = useFirebase();
 
-    const handleChange = e => {
-        setForm({
-            ...form,
-            [e.target.name]:e.target.value
-        })
-        setError({
+    // const handleChange = e => {
+    //     setForm({
+    //         ...form,
+    //         [e.target.name]:e.target.value
+    //     })
+    //     setError({
+    //         ...error,
+    //         [e.target.name]:''
+    //     })
+    // }
+    const handleChange = event => {
+        setForm({ ...form,[event.target.name]:event.target.value});
+             setError({
             ...error,
-            [e.target.name]:''
+            [event.target.name]:''
         })
+      };
+    
+
+    const handleClickShowPassword = ()=>{
+        setForm({...form, showPassword: !form.showPassword })
     }
 
     const validate =()=>{
@@ -129,18 +152,45 @@ function Login(props){
             helperText={error.email}
             error={error.email ?true:false}
             disabled={isSubmitting}/>
-        <TextField id="password" 
+    <FormControl className={classes.password} >
+        {/* <TextField id="password" 
             type="password" 
-            name="password" 
+            // name="password" 
             margin="normal" 
             label="Password" 
             fullWidth
             required 
             value={form.password} 
-            onChange={handleChange}
+            // onChange={handleChange}
             helperText={error.password}
             error={error.password ?true:false}
-            disabled={isSubmitting}/>
+            disabled={isSubmitting}/> */}
+             
+             <InputLabel htmlFor="standard-adornment-password">Password</InputLabel>       
+        <Input id="password" 
+            type={form.showPassword ? 'text' : 'password'}
+            value={form.password}
+            fullWidth
+            margin="normal"
+            required 
+            name="password"
+            helperText={error.password}
+            disabled={isSubmitting}
+            onChange={handleChange}
+            error={error.password ?true:false}
+            label="Password" 
+            endAdornment={
+            <InputAdornment position="end">
+                <IconButton
+                  aria-label="toggle password visibility"
+                  onClick={handleClickShowPassword}
+                >
+                  {form.password ? <Visibility /> : <VisibilityOff />}
+                </IconButton>
+              </InputAdornment>
+               }/>
+              </FormControl>
+        
         
         <Grid container className={classes.buttons}>
             <Grid item xs>

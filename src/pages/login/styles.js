@@ -16,7 +16,13 @@ const useStyles = makeStyles(theme=>({
     },
     forgotPassword:{
         marginTop:theme.spacing(3)
-    }
+    },
+      margin: {
+        margin: theme.spacing(1),
+      },
+      password:{
+          width:'280px'
+      }
 }))
 
 export default useStyles;

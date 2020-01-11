@@ -27,7 +27,7 @@ const handleChangeTab=(event,value)=>{
                 textColor='primary'
                 onChange={handleChangeTab}>
                 <Tab label="Pengguna" value="/pengaturan/pengguna"/>
-                <Tab label="Toko" value="pangaturan/toko"/>
+                <Tab label="Toko" value="/pengaturan/toko"/>
             </Tabs>
             <div className={classes.tabContent}>
         <Switch>
