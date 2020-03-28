@@ -1,9 +1,14 @@
-rules_version = '2';
 service cloud.firestore {
   match /databases/{database}/documents {
  match /toko/{uid}{
    allow read:if request.auth.uid ==uid;
    allow write:if request.auth.uid ==uid;
+   match /produk/{produkId}{
+  allow read, write:if request.auth.uid == uid;
+   }
+     match /transaksi/{produkId}{
+  allow read, write:if request.auth.uid == uid;
+   }
  }
   }
 }
